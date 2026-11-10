@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Repaso Didáctico e Interactivo - MÓDULO 2: Hábitos de Estudio de Alto Impacto</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Inter & Lexend (Lectura fácil) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Lexend:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        accessible: ['Lexend', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            500: '#22c55e',
+                            600: '#16a34a',
+                            700: '#15803d',
+                            900: '#14532d',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Estilos de Accesibilidad DUA */
+        .high-contrast {
+            background-color: #000000 !important;
+            color: #ffff00 !important;
+        }
+        .high-contrast header, 
+        .high-contrast section, 
+        .high-contrast article, 
+        .high-contrast div,
+        .high-contrast button,
+        .high-contrast input,
+        .high-contrast textarea {
+            background-color: #111111 !important;
+            color: #ffffff !important;
+            border-color: #ffff00 !important;
+        }
+        .high-contrast a, .high-contrast h1, .high-contrast h2, .high-contrast h3, .high-contrast label {
+            color: #ffff00 !important;
+        }
+        .dyslexic-font {
+            font-family: 'Lexend', sans-serif !important;
+            letter-spacing: 0.05em;
+            word-spacing: 0.1em;
+            line-height: 1.8 !important;
+        }
+        .large-text {
+            font-size: 1.2rem !important;
+        }
+        .large-text h1 { font-size: 2.2rem !important; }
+        .large-text h2 { font-size: 1.8rem !important; }
+        .large-text h3 { font-size: 1.4rem !important; }
+        
+        *:focus-visible {
+            outline: 4px solid #f59e0b !important;
+            outline-offset: 3px !important;
+        }
+
+        .draggable-item {
+            cursor: grab;
+            user-select: none;
+        }
+        .draggable-item:active {
+            cursor: grabbing;
+        }
+        .drop-zone.drag-over {
+            border-color: #22c55e !important;
+            background-color: #f0fdf4 !important;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans transition-colors duration-300 min-h-screen flex flex-col">
+
+    <!-- BARRA DE ACCESIBILIDAD DUA -->
+    <header class="sticky top-0 z-50 bg-slate-900 text-white shadow-md" role="banner" aria-label="Herramientas de accesibilidad">
+        <div class="max-w-7xl mx-auto px-4 py-2 flex flex-wrap justify-between items-center gap-2 text-sm">
+            <div class="flex items-center space-x-2">
+                <i class="fa-solid fa-gamepad text-xl text-brand-500" aria-hidden="true"></i>
+                <span class="font-bold tracking-wide hidden sm:inline">Laboratorio de Repaso Didáctico (4 Retos) - DUA</span>
+            </div>
+            
+            <div class="flex flex-wrap items-center gap-2" role="toolbar" aria-label="Controles de accesibilidad">
+                <button onclick="toggleHighContrast()" id="contrastBtn" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 rounded-lg border border-slate-700 flex items-center space-x-1 transition" aria-pressed="false">
+                    <i class="fa-solid fa-circle-half-stroke text-yellow-400" aria-hidden="true"></i>
+                    <span class="text-xs font-medium">Alto Contraste</span>
+                </button>
+
+                <button onclick="toggleDyslexicFont()" id="fontBtn" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 rounded-lg border border-slate-700 flex items-center space-x-1 transition" aria-pressed="false">
+                    <i class="fa-solid fa-font text-blue-400" aria-hidden="true"></i>
+                    <span class="text-xs font-medium">Lectura Fácil</span>
+                </button>
+
+                <button onclick="toggleLargeText()" id="textBtn" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 rounded-lg border border-slate-700 flex items-center space-x-1 transition" aria-pressed="false">
+                    <i class="fa-solid fa-text-height text-green-400" aria-hidden="true"></i>
+                    <span class="text-xs font-medium">Texto Grande</span>
+                </button>
+
+                <button onclick="readFullPage()" id="speechBtn" class="px-3 py-1.5 bg-brand-600 hover:bg-brand-700 text-white rounded-lg flex items-center space-x-1 font-semibold transition">
+                    <i class="fa-solid fa-volume-high" aria-hidden="true"></i>
+                    <span class="text-xs">Escuchar Todo</span>
+                </button>
+                <button onclick="stopSpeech()" id="stopSpeechBtn" class="hidden px-3 py-1.5 bg-red-600 hover:bg-red-700 text-white rounded-lg items-center space-x-1 font-semibold transition">
+                    <i class="fa-solid fa-circle-stop" aria-hidden="true"></i>
+                    <span class="text-xs">Detener Voz</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="flex-grow max-w-3xl w-full mx-auto px-4 py-6 space-y-6" id="main-content">
+
+        <!-- HEADER RÁPIDO -->
+        <section class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200 text-center space-y-3">
+            <h1 class="text-xl sm:text-3xl font-extrabold text-slate-900 tracking-tight" id="title-mod">
+                MÓDULO 2: Hábitos de Estudio de Alto Impacto
+            </h1>
+            <p class="text-xs sm:text-sm text-slate-600 font-medium">
+                Laboratorio Práctico e Interactivo - 4 Dinámicas DUA
+            </p>
+            
+            <div class="pt-1 flex flex-wrap justify-center gap-2">
+                <button onclick="readFullPage()" id="speechBtnMain" class="px-5 py-2.5 bg-brand-600 hover:bg-brand-700 text-white rounded-xl text-xs font-bold transition shadow flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-volume-high text-base" aria-hidden="true"></i>
+                    <span>Activar Guía Completa de Audio (Lector Accesible)</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- DINÁMICA 1: CLASIFICADOR INTERACTIVO (PASIVO VS ACTIVO) -->
+        <section class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200 space-y-3" id="punto1">
+            <div class="flex items-center justify-between border-b pb-2 border-slate-100">
+                <div class="flex items-center gap-2">
+                    <span class="flex items-center justify-center w-7 h-7 bg-brand-600 text-white rounded-full font-bold text-xs">1</span>
+                    <h2 class="text-sm font-bold text-slate-900">Actividad 1: Clasificador Dinámico de Hábitos</h2>
+                </div>
+                <button onclick="speakSection('punto1')" class="text-brand-700 hover:text-brand-900 text-xs font-semibold flex items-center gap-1">
+                    <i class="fa-solid fa-volume-low"></i> Escuchar Actividad 1
+                </button>
+            </div>
+            <p class="text-xs text-slate-600">Presiona o arrastra cada tarjeta a la caja que le corresponde:</p>
+            
+            <!-- Tarjetas de hábitos -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 my-2" id="cards-container">
+                <div id="card1" class="p-2.5 bg-slate-100 border border-slate-300 rounded-xl text-xs font-medium cursor-pointer hover:bg-slate-200 transition flex items-center justify-between" onclick="assignHabit('card1', 'pasivo', 'Subrayar el 100% de la página sin reflexionar')">
+                    <span>"Subrayar todo el texto sin reflexionar"</span>
+                    <i class="fa-solid fa-hand-pointer text-slate-400"></i>
+                </div>
+                <div id="card2" class="p-2.5 bg-slate-100 border border-slate-300 rounded-xl text-xs font-medium cursor-pointer hover:bg-slate-200 transition flex items-center justify-between" onclick="assignHabit('card2', 'activo', 'Explicar la idea clave con tus propias palabras')">
+                    <span>"Explicar la idea clave con tus palabras"</span>
+                    <i class="fa-solid fa-hand-pointer text-slate-400"></i>
+                </div>
+            </div>
+
+            <!-- Cajas receptoras -->
+            <div class="grid grid-cols-2 gap-3 pt-2">
+                <div class="p-3 border-2 border-dashed border-red-300 bg-red-50/50 rounded-xl min-h-[70px] text-center space-y-1" id="box-pasivo">
+                    <span class="text-[11px] font-bold text-red-700 block">🔴 ESTUDIO PASIVO</span>
+                    <div class="items-list text-[11px] space-y-1"></div>
+                </div>
+                <div class="p-3 border-2 border-dashed border-emerald-300 bg-emerald-50/50 rounded-xl min-h-[70px] text-center space-y-1" id="box-activo">
+                    <span class="text-[11px] font-bold text-emerald-700 block">🟢 PROCESAMIENTO ACTIVO</span>
+                    <div class="items-list text-[11px] space-y-1"></div>
+                </div>
+            </div>
+            <p id="feedback1" class="hidden font-bold text-xs text-center pt-1"></p>
+        </section>
+
+        <!-- DINÁMICA 2: SIMULADOR INTERACTIVO DEL MÉTODO CORNELL -->
+        <section class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200 space-y-3" id="punto2">
+            <div class="flex items-center justify-between border-b pb-2 border-slate-100">
+                <div class="flex items-center gap-2">
+                    <span class="flex items-center justify-center w-7 h-7 bg-brand-600 text-white rounded-full font-bold text-xs">2</span>
+                    <h2 class="text-sm font-bold text-slate-900">Actividad 2: Construcción de la Hoja Cornell</h2>
+                </div>
+                <button onclick="speakSection('punto2')" class="text-brand-700 hover:text-brand-900 text-xs font-semibold flex items-center gap-1">
+                    <i class="fa-solid fa-volume-low"></i> Escuchar Actividad 2
+                </button>
+            </div>
+            <p class="text-xs text-slate-600">Completa la maqueta de apuntes asignando la sección correspondiente a cada elemento:</p>
+
+            <!-- Hoja gráfica Cornell simulación -->
+            <div class="border-2 border-slate-800 rounded-xl bg-amber-50/30 p-2 space-y-2 text-xs">
+                <div class="grid grid-cols-3 gap-2">
+                    <!-- Columna Izquierda -->
+                    <div class="col-span-1 border border-slate-300 bg-white p-2 rounded-lg text-center space-y-1">
+                        <span class="font-bold text-[10px] text-slate-500 block">Columna Izquierda (1/3)</span>
+                        <select onchange="checkCornellSection(this, 'ideas')" class="w-full text-[11px] p-1 border rounded bg-slate-50 font-medium">
+                            <option value="">¿Qué va aquí?</option>
+                            <option value="desarrollo">Desarrollo de ejemplos</option>
+                            <option value="ideas">Ideas Clave / Preguntas</option>
+                            <option value="resumen">Síntesis final</option>
+                        </select>
+                    </div>
+                    <!-- Área de Notas -->
+                    <div class="col-span-2 border border-slate-300 bg-white p-2 rounded-lg text-center space-y-1">
+                        <span class="font-bold text-[10px] text-slate-500 block">Área Derecha de Notas (2/3)</span>
+                        <select onchange="checkCornellSection(this, 'desarrollo')" class="w-full text-[11px] p-1 border rounded bg-slate-50 font-medium">
+                            <option value="">¿Qué va aquí?</option>
+                            <option value="ideas">Preguntas clave</option>
+                            <option value="desarrollo">Desarrollo y Ejemplos propios</option>
+                            <option value="resumen">Resumen de 2 líneas</option>
+                        </select>
+                    </div>
+                </div>
+                <!-- Resumen inferior -->
+                <div class="border border-slate-300 bg-white p-2 rounded-lg text-center space-y-1">
+                    <span class="font-bold text-[10px] text-slate-500 block">Área Inferior</span>
+                    <select onchange="checkCornellSection(this, 'resumen')" class="w-full text-[11px] p-1 border rounded bg-slate-50 font-medium">
+                        <option value="">¿Qué va aquí?</option>
+                        <option value="resumen">Resumen sintético del tema</option>
+                        <option value="ideas">Listado de palabras clave</option>
+                    </select>
+                </div>
+            </div>
+            <p id="feedback2" class="hidden font-bold text-xs text-center text-emerald-600">¡Excelente! Has estructurado la Hoja Cornell de forma correcta.</p>
+        </section>
+
+        <!-- DINÁMICA 3: ENCADENAMIENTO PASO A PASO (MÉTODO IPLER) -->
+        <section class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200 space-y-3" id="punto3">
+            <div class="flex items-center justify-between border-b pb-2 border-slate-100">
+                <div class="flex items-center gap-2">
+                    <span class="flex items-center justify-center w-7 h-7 bg-brand-600 text-white rounded-full font-bold text-xs">3</span>
+                    <h2 class="text-sm font-bold text-slate-900">Actividad 3: Ordena los 5 Pasos del Método IPLER</h2>
+                </div>
+                <button onclick="speakSection('punto3')" class="text-brand-700 hover:text-brand-900 text-xs font-semibold flex items-center gap-1">
+                    <i class="fa-solid fa-volume-low"></i> Escuchar Actividad 3
+                </button>
+            </div>
+            <p class="text-xs text-slate-600">Organiza la secuencia lógica del método de lectura interactivo haciendo clic en los pasos:</p>
+
+            <div class="space-y-1.5 text-xs" id="ipler-steps-container">
+                <div class="ipler-step flex items-center justify-between p-2 bg-slate-100 hover:bg-slate-200 rounded-lg cursor-pointer border border-slate-200" onclick="moveIplerStep(this)">
+                    <span class="font-semibold text-slate-800">P - Preguntar (Convertir títulos en interrogantes)</span>
+                    <span class="badge px-2 py-0.5 bg-slate-300 rounded text-[10px] font-bold">Paso 1</span>
+                </div>
+                <div class="ipler-step flex items-center justify-between p-2 bg-slate-100 hover:bg-slate-200 rounded-lg cursor-pointer border border-slate-200" onclick="moveIplerStep(this)">
+                    <span class="font-semibold text-slate-800">I - Inspeccionar (Prelectura y revisión de títulos)</span>
+                    <span class="badge px-2 py-0.5 bg-slate-300 rounded text-[10px] font-bold">Paso 2</span>
+                </div>
+                <div class="ipler-step flex items-center justify-between p-2 bg-slate-100 hover:bg-slate-200 rounded-lg cursor-pointer border border-slate-200" onclick="moveIplerStep(this)">
+                    <span class="font-semibold text-slate-800">L - Leer (Buscar respuestas concentradamente)</span>
+                    <span class="badge px-2 py-0.5 bg-slate-300 rounded text-[10px] font-bold">Paso 3</span>
+                </div>
+                <div class="ipler-step flex items-center justify-between p-2 bg-slate-100 hover:bg-slate-200 rounded-lg cursor-pointer border border-slate-200" onclick="moveIplerStep(this)">
+                    <span class="font-semibold text-slate-800">E - Expresar (Recitar con tus palabras)</span>
+                    <span class="badge px-2 py-0.5 bg-slate-300 rounded text-[10px] font-bold">Paso 4</span>
+                </div>
+                <div class="ipler-step flex items-center justify-between p-2 bg-slate-100 hover:bg-slate-200 rounded-lg cursor-pointer border border-slate-200" onclick="moveIplerStep(this)">
+                    <span class="font-semibold text-slate-800">R - Revisar (Verificar notas y repasar)</span>
+                    <span class="badge px-2 py-0.5 bg-slate-300 rounded text-[10px] font-bold">Paso 5</span>
+                </div>
+            </div>
+
+            <div class="flex justify-between items-center pt-2">
+                <button onclick="checkIplerOrder()" class="px-3 py-1.5 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-lg text-xs">
+                    Comprobar Orden
+                </button>
+                <p id="ipler-feedback" class="font-bold text-xs"></p>
+            </div>
+        </section>
+
+        <!-- DINÁMICA 4: SIMULADOR DE RESPIRACIÓN Y PAUSA ACTIVA -->
+        <section class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200 space-y-3" id="punto4">
+            <div class="flex items-center justify-between border-b pb-2 border-slate-100">
+                <div class="flex items-center gap-2">
+                    <span class="flex items-center justify-center w-7 h-7 bg-brand-600 text-white rounded-full font-bold text-xs">4</span>
+                    <h2 class="text-sm font-bold text-slate-900">Actividad 4: Pausa Activa de Respiración Neuroeducativa (4-4-6)</h2>
+                </div>
+                <button onclick="speakSection('punto4')" class="text-brand-700 hover:text-brand-900 text-xs font-semibold flex items-center gap-1">
+                    <i class="fa-solid fa-volume-low"></i> Escuchar Actividad 4
+                </button>
+            </div>
+
+            <div class="bg-emerald-50/70 border border-emerald-200 rounded-2xl p-4 text-center space-y-3">
+                <p id="breathing-instruction" class="font-bold text-emerald-950 text-xs">
+                    Practica la respiración guiada por voz para oxigenación cerebral:
+                </p>
+
+                <!-- Círculo animado de respiración -->
+                <div id="breathing-circle" class="w-16 h-16 mx-auto rounded-full bg-emerald-100 border-4 border-emerald-500 flex items-center justify-center transition-all duration-1000 shadow">
+                    <i class="fa-solid fa-wind text-emerald-600 text-xl" aria-hidden="true"></i>
+                </div>
+
+                <p id="timer-display" class="text-[11px] text-slate-600 font-mono font-bold">
+                    Inhalar (4s) → Retener (4s) → Exhalar (6s)
+                </p>
+
+                <button onclick="startBreathingExercise()" id="breathBtn" class="px-5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold rounded-xl text-xs transition shadow">
+                    <i class="fa-solid fa-play mr-1"></i> Iniciar Ejercicio Guiado
+                </button>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-slate-900 text-slate-400 py-4 text-center text-xs mt-8 border-t border-slate-800">
+        <p>Laboratorio Didáctico Adaptativo DUA - Actividades Prácticas Módulo 2</p>
+    </footer>
+
+    <!-- JAVASCRIPT DINÁMICO Y ACCESIBLE -->
+    <script>
+        let isHighContrast = false;
+        let isDyslexicFont = false;
+        let isLargeText = false;
+        let speechSynth = window.speechSynthesis;
+
+        function toggleHighContrast() {
+            isHighContrast = !isHighContrast;
+            document.body.classList.toggle('high-contrast', isHighContrast);
+            document.getElementById('contrastBtn').setAttribute('aria-pressed', isHighContrast);
+        }
+
+        function toggleDyslexicFont() {
+            isDyslexicFont = !isDyslexicFont;
+            document.body.classList.toggle('dyslexic-font', isDyslexicFont);
+            document.getElementById('fontBtn').setAttribute('aria-pressed', isDyslexicFont);
+        }
+
+        function toggleLargeText() {
+            isLargeText = !isLargeText;
+            document.body.classList.toggle('large-text', isLargeText);
+            document.getElementById('textBtn').setAttribute('aria-pressed', isLargeText);
+        }
+
+        // --- DINÁMICA 1: CLASIFICADOR DE HÁBITOS ---
+        function assignHabit(cardId, type, labelText) {
+            const card = document.getElementById(cardId);
+            const targetBox = type === 'pasivo' ? document.getElementById('box-pasivo') : document.getElementById('box-activo');
+            const list = targetBox.querySelector('.items-list');
+            
+            const badge = document.createElement('div');
+            badge.className = "p-1.5 bg-white rounded shadow-sm border border-slate-200 text-slate-800 font-semibold";
+            badge.innerText = labelText;
+            
+            list.appendChild(badge);
+            card.remove();
+
+            const feedback = document.getElementById('feedback1');
+            feedback.classList.remove('hidden');
+            if(type === 'pasivo') {
+                feedback.className = "text-red-600 font-bold text-xs text-center pt-1";
+                feedback.innerText = "¡Correcto! Eso corresponde a Estudio Pasivo.";
+                speakText("Clasificado como Estudio Pasivo.");
+            } else {
+                feedback.className = "text-emerald-600 font-bold text-xs text-center pt-1";
+                feedback.innerText = "¡Excelente! Corresponde a Procesamiento Activo.";
+                speakText("Clasificado como Procesamiento Activo.");
+            }
+        }
+
+        // --- DINÁMICA 2: HOJA CORNELL ---
+        let cornellState = { ideas: false, desarrollo: false, resumen: false };
+        function checkCornellSection(selectElem, correctType) {
+            if(selectElem.value === correctType) {
+                selectElem.classList.add('border-emerald-500', 'bg-emerald-50', 'text-emerald-800');
+                cornellState[correctType] = true;
+                speakText("Sección asignada correctamente.");
+            } else {
+                selectElem.classList.remove('border-emerald-500', 'bg-emerald-50', 'text-emerald-800');
+                cornellState[correctType] = false;
+            }
+
+            if(cornellState.ideas && cornellState.desarrollo && cornellState.resumen) {
+                document.getElementById('feedback2').classList.remove('hidden');
+                speakText("Felicidades. Has completado la Hoja Cornell perfectamente.");
+            }
+        }
+
+        // --- DINÁMICA 3: REORDENAR IPLER ---
+        function moveIplerStep(elem) {
+            const container = document.getElementById('ipler-steps-container');
+            container.appendChild(elem); // Mueve el elemento al final al hacer clic
+            updateIplerBadges();
+        }
+
+        function updateIplerBadges() {
+            const steps = document.querySelectorAll('.ipler-step');
+            steps.forEach((step, index) => {
+                step.querySelector('.badge').innerText = `Paso ${index + 1}`;
+            });
+        }
+
+        function checkIplerOrder() {
+            const steps = document.querySelectorAll('.ipler-step');
+            const currentOrder = Array.from(steps).map(s => s.innerText.charAt(0));
+            const correctOrder = ['I', 'P', 'L', 'E', 'R'];
+
+            const feedback = document.getElementById('ipler-feedback');
+            const isCorrect = currentOrder.every((val, index) => val === correctOrder[index]);
+
+            if(isCorrect) {
+                feedback.className = "font-bold text-xs text-emerald-600";
+                feedback.innerText = "¡Excelente! Secuencia IPLER Correcta (I-P-L-E-R).";
+                speakText("Secuencia IPLER Correcta.");
+            } else {
+                feedback.className = "font-bold text-xs text-red-600";
+                feedback.innerText = "Sigue intentando. Recuerda las siglas I-P-L-E-R.";
+                speakText("Orden incorrecto. Reorganiza siguiendo las siglas I P L E R.");
+            }
+        }
+
+        // --- SISTEMA DE VOZ DUA OPTIMIZADO ---
+        function readFullPage() {
+            if (!speechSynth) return;
+            if (speechSynth.speaking) {
+                stopSpeech();
+                return;
+            }
+
+            const textToRead = `
+                Módulo 2: Hábitos de Estudio de Alto Impacto. Laboratorio Práctico e Interactivo DUA.
+                Actividad 1: Clasificador dinámico de hábitos pasivos y activos.
+                Actividad 2: Construcción interactiva de la Hoja del Método Cornell.
+                Actividad 3: Reordenamiento paso a paso del Método IPLER.
+                Actividad 4: Pausa Activa con respiración guiada 4 4 6.
+            `;
+            speakText(textToRead);
+        }
+
+        function speakSection(elementId) {
+            const section = document.getElementById(elementId);
+            if (section) speakText(section.innerText);
+        }
+
+        function speakText(text) {
+            if (!speechSynth) return;
+            speechSynth.cancel();
+
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'es-ES';
+            utterance.rate = 0.95;
+
+            utterance.onstart = () => {
+                document.getElementById('speechBtn').classList.add('hidden');
+                document.getElementById('stopSpeechBtn').classList.remove('hidden');
+            };
+            utterance.onend = () => stopSpeech();
+
+            speechSynth.speak(utterance);
+        }
+
+        function stopSpeech() {
+            if (speechSynth && speechSynth.speaking) speechSynth.cancel();
+            document.getElementById('speechBtn').classList.remove('hidden');
+            document.getElementById('stopSpeechBtn').classList.add('hidden');
+        }
+
+        // --- DINÁMICA 4: RESPIRACIÓN GUIADA 4-4-6 ---
+        function startBreathingExercise() {
+            const circle = document.getElementById('breathing-circle');
+            const instruction = document.getElementById('breathing-instruction');
+            const btn = document.getElementById('breathBtn');
+
+            btn.disabled = true;
+            btn.classList.add('opacity-50');
+
+            const step1 = "Inhala profundamente durante 4 segundos";
+            instruction.innerText = "1. " + step1;
+            circle.style.transform = "scale(1.3)";
+            circle.style.backgroundColor = "#bbf7d0";
+            speakText(step1);
+
+            setTimeout(() => {
+                const step2 = "Retén el aire durante 4 segundos";
+                instruction.innerText = "2. " + step2;
+                circle.style.backgroundColor = "#fef08a";
+                speakText(step2);
+
+                setTimeout(() => {
+                    const step3 = "Exhala despacio durante 6 segundos";
+                    instruction.innerText = "3. " + step3;
+                    circle.style.transform = "scale(1)";
+                    circle.style.backgroundColor = "#e2e8f0";
+                    speakText(step3);
+
+                    setTimeout(() => {
+                        const endMsg = "Pausa completada. Cerebro oxigenado para continuar.";
+                        instruction.innerText = "¡" + endMsg + "!";
+                        speakText(endMsg);
+                        btn.disabled = false;
+                        btn.classList.remove('opacity-50');
+                    }, 6000);
+                }, 4000);
+            }, 4000);
+        }
+    </script>
+</body>
+</html>
